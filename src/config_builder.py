@@ -28,12 +28,13 @@ class ConfigurationRoot:
 
     def __getitem__(self, key):
         lower_key = key.lower()
+        num_sources = len(self.sources)
 
         for idx, keymap in enumerate(reversed(self._keymaps)):
             mapped_key = keymap.get(lower_key, None)
 
             if mapped_key is not None:
-                return self._configs[idx][mapped_key]
+                return self._configs[num_sources - idx - 1][mapped_key]
 
         raise KeyError('key not found in any config providers: "%s"' % key)
 
